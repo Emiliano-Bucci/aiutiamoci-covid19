@@ -127,7 +127,7 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
               transition: color 400ms;
 
               :hover {
-                color: ${colors.dark};
+                color: #eee;
               }
             }
           `}
