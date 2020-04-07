@@ -1,5 +1,6 @@
 import { css } from '@emotion/core'
 import { colors } from './colors'
+import { shadow } from './shadow'
 
 export const globalStyles = css`
   html,
@@ -253,5 +254,28 @@ export const globalStyles = css`
   *::after,
   *::before {
     outline: none;
+  }
+`
+
+export const boxStyles = css`
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: ${shadow.dark};
+`
+
+export const buttonStyles = css`
+  color: inherit;
+  padding: 0.8rem 1.6rem;
+  border-radius: 4px;
+  transition: all 400ms;
+  background-color: ${colors.semiDark};
+  outline: none;
+  text-decoration: none;
+  flex-shrink: 0;
+  color: #fff;
+
+  :hover,
+  :focus {
+    background-color: ${colors.dark};
   }
 `

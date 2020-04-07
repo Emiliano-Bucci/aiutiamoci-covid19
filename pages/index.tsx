@@ -1,11 +1,30 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import 'isomorphic-unfetch'
-import { colors } from 'theme'
+import { colors, boxStyles, buttonStyles } from 'theme'
 import { shadow } from 'theme/shadow'
 import Logo from 'public/virus.svg?sprite'
+import TagSVG from 'public/tag.svg?sprite'
+import { Link } from 'components/Link'
 
-const Page = () => {
+type Tag = {
+  tag: {
+    title: string
+    slug: string
+  }
+}
+
+type Activity = {
+  activityId: string
+  description: string
+  title: string
+  slug: string
+  city: string
+  content: string
+  tags: Tag[]
+}
+
+const Page = ({ activity }: { activity: Activity[] }) => {
   return (
     <div>
       <header
@@ -85,7 +104,118 @@ const Page = () => {
           padding-bottom: 4rem;
         `}
       >
-        main!
+        <div
+          css={css`
+            position: relative;
+            z-index: 10;
+            margin: 0 auto;
+            margin-top: -4rem;
+            width: 100%;
+            max-width: 720px;
+          `}
+        >
+          {activity.map(activity => {
+            return (
+              <article
+                key={activity.activityId}
+                css={css`
+                  ${boxStyles};
+                  padding: 2.4rem;
+                  padding-top: 1.6rem;
+                  border-left: 5px solid ${colors.semiLight};
+                `}
+              >
+                <div>
+                  <h2
+                    css={css`
+                      font-size: 2.8rem;
+                      margin-bottom: 0.8rem;
+                    `}
+                  >
+                    {activity.title}
+                  </h2>
+                  <span
+                    css={css`
+                      display: block;
+                    `}
+                  >
+                    {activity.description}
+                  </span>
+                </div>
+
+                <div
+                  css={css`
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding-top: 2.4rem;
+                  `}
+                >
+                  <div
+                    css={css`
+                      display: flex;
+                      flex: 1;
+                      margin-right: 3.2rem;
+                    `}
+                  >
+                    <ul
+                      css={css`
+                        display: flex;
+                        flex-flow: wrap;
+                      `}
+                    >
+                      {activity.tags.map(tag => {
+                        return (
+                          <li
+                            key={tag.tag.slug}
+                            css={css`
+                              display: flex;
+                              align-items: center;
+                              font-size: 1.4rem;
+                              background-color: ${colors.semiLight};
+                              border-radius: 4px;
+                              color: #fff;
+                              padding: 0.4rem 0.8rem;
+
+                              :not(:last-of-type) {
+                                margin-right: 0.8rem;
+                              }
+                            `}
+                          >
+                            <span
+                              css={css`
+                                margin-right: 0.64rem;
+                              `}
+                            >
+                              <TagSVG
+                                css={css`
+                                  width: 16px;
+                                  height: 16px;
+                                  fill: #fff;
+                                  color: #fff;
+                                `}
+                              />
+                            </span>
+
+                            <span>{tag.tag.title}</span>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </div>
+
+                  <Link
+                    href="/attivita/[slug]"
+                    as={`/attivita/${activity.slug}`}
+                    customStyles={buttonStyles}
+                  >
+                    Vedi attività
+                  </Link>
+                </div>
+              </article>
+            )
+          })}
+        </div>
       </main>
     </div>
   )
