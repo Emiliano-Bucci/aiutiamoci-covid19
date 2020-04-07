@@ -87,8 +87,8 @@ const Page = ({ activity }: { activity: Activity[] }) => {
               flex-shrink: 0;
               width: 72px;
               height: 72px;
-              opacity: 0.64;
               margin-top: 4rem;
+              fill: ${colors.dark};
             }
           `}
         >
@@ -123,6 +123,10 @@ const Page = ({ activity }: { activity: Activity[] }) => {
                   padding: 2.4rem;
                   padding-top: 1.6rem;
                   border-left: 5px solid ${colors.semiLight};
+
+                  :not(:last-of-type) {
+                    margin-bottom: 4rem;
+                  }
                 `}
               >
                 <div>
@@ -217,6 +221,39 @@ const Page = ({ activity }: { activity: Activity[] }) => {
           })}
         </div>
       </main>
+
+      <footer
+        css={css`
+          padding: 0.8rem;
+          background-color: ${colors.semiDark};
+          text-align: center;
+        `}
+      >
+        <span
+          css={css`
+            color: #fff;
+            font-size: 1.4rem;
+
+            a {
+              color: inherit;
+              transition: color 400ms;
+
+              :hover {
+                color: ${colors.dark};
+              }
+            }
+          `}
+        >
+          Make with &#9829; by{' '}
+          <a
+            href="https://www.facebook.com/profile.php?id=693248867"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Emiliano Bucci
+          </a>
+        </span>
+      </footer>
     </div>
   )
 }
