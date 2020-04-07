@@ -102,6 +102,7 @@ const Page = ({ activity }: { activity: Activity[] }) => {
           display: flex;
           justify-content: center;
           padding-bottom: 4rem;
+          padding-bottom: 8rem;
         `}
       >
         <div
@@ -193,8 +194,8 @@ const Page = ({ activity }: { activity: Activity[] }) => {
                             >
                               <TagSVG
                                 css={css`
-                                  width: 16px;
-                                  height: 16px;
+                                  width: 14px;
+                                  height: 14px;
                                   fill: #fff;
                                   color: #fff;
                                 `}
@@ -212,6 +213,7 @@ const Page = ({ activity }: { activity: Activity[] }) => {
                     href="/attivita/[slug]"
                     as={`/attivita/${activity.slug}`}
                     customStyles={buttonStyles}
+                    title={`Visita l'attività ${activity.title}`}
                   >
                     Vedi attività
                   </Link>
