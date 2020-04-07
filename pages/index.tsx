@@ -51,7 +51,7 @@ const Page = ({ activity }: { activity: Activity[] }) => {
               font-size: 6.4rem;
 
               @media all and (max-width: 700px) {
-                font-size: 4rem;
+                font-size: 3.8rem;
                 padding: 0 2.4rem;
               }
             `}
@@ -64,6 +64,10 @@ const Page = ({ activity }: { activity: Activity[] }) => {
               text-align: center;
               display: inline-block;
               font-family: 'Lato';
+
+              @media all and (max-width: 700px) {
+                font-size: 2.6rem;
+              }
             `}
           >
             Aiutiamoci per aiutare
@@ -113,6 +117,10 @@ const Page = ({ activity }: { activity: Activity[] }) => {
             margin-top: -4rem;
             width: 100%;
             max-width: 720px;
+
+            @media all and (max-width: 700px) {
+              padding: 0 1.6rem;
+            }
           `}
         >
           {activity.map(activity => {
@@ -127,6 +135,11 @@ const Page = ({ activity }: { activity: Activity[] }) => {
 
                   :not(:last-of-type) {
                     margin-bottom: 4rem;
+                  }
+
+                  @media all and (max-width: 700px) {
+                    padding: 2rem;
+                    padding-top: 1.2rem;
                   }
                 `}
               >
@@ -154,6 +167,11 @@ const Page = ({ activity }: { activity: Activity[] }) => {
                     align-items: center;
                     justify-content: space-between;
                     padding-top: 2.4rem;
+
+                    @media all and (max-width: 700px) {
+                      flex-direction: column;
+                      align-items: stretch;
+                    }
                   `}
                 >
                   <div
@@ -161,6 +179,10 @@ const Page = ({ activity }: { activity: Activity[] }) => {
                       display: flex;
                       flex: 1;
                       margin-right: 3.2rem;
+
+                      @media all and (max-width: 700px) {
+                        margin-right: 0;
+                      }
                     `}
                   >
                     <ul
@@ -184,6 +206,10 @@ const Page = ({ activity }: { activity: Activity[] }) => {
 
                               :not(:last-of-type) {
                                 margin-right: 0.8rem;
+                              }
+
+                              @media all and (max-width: 700px) {
+                                margin-bottom: 0.8rem;
                               }
                             `}
                           >
@@ -209,14 +235,22 @@ const Page = ({ activity }: { activity: Activity[] }) => {
                     </ul>
                   </div>
 
-                  <Link
-                    href="/attivita/[slug]"
-                    as={`/attivita/${activity.slug}`}
-                    customStyles={buttonStyles}
-                    title={`Visita l'attività ${activity.title}`}
+                  <div
+                    css={css`
+                      @media all and (max-width: 700px) {
+                        margin-top: 0.8rem;
+                      }
+                    `}
                   >
-                    Vedi attività
-                  </Link>
+                    <Link
+                      href="/attivita/[slug]"
+                      as={`/attivita/${activity.slug}`}
+                      customStyles={buttonStyles}
+                      title={`Visita l'attività ${activity.title}`}
+                    >
+                      Vedi attività
+                    </Link>
+                  </div>
                 </div>
               </article>
             )
@@ -226,15 +260,26 @@ const Page = ({ activity }: { activity: Activity[] }) => {
 
       <footer
         css={css`
-          padding: 0.8rem;
+          padding: 1.6rem 0;
           background-color: ${colors.semiDark};
           text-align: center;
         `}
       >
         <span
           css={css`
+            display: block;
             color: #fff;
             font-size: 1.4rem;
+            font-style: italic;
+          `}
+        >
+          - Andrà tutto bene -
+        </span>
+        <span
+          css={css`
+            color: #fff;
+            font-size: 1.4rem;
+            display: block;
 
             a {
               color: inherit;

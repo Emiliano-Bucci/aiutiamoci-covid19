@@ -264,6 +264,7 @@ export const boxStyles = css`
 `
 
 export const buttonStyles = css`
+  display: block;
   color: inherit;
   padding: 0.8rem 1.6rem;
   border-radius: 4px;
@@ -273,6 +274,7 @@ export const buttonStyles = css`
   text-decoration: none;
   flex-shrink: 0;
   color: #fff;
+  text-align: center;
 
   :hover,
   :focus {
