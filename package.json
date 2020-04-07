@@ -10,13 +10,20 @@
     "lint:prepush": "eslint --fix --config .eslintrc.prepush.js '**/*.{ts,tsx,js}'"
   },
   "dependencies": {
-    "next": "9.3.4",
+    "@emotion/core": "^10.0.28",
+    "apollo-client": "^2.6.8",
+    "graphql": "^14.6.0",
+    "graphql-tag": "^2.10.3",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^9.3.0",
     "react": "16.13.1",
     "react-dom": "16.13.1"
   },
   "devDependencies": {
     "@types/node": "^13.11.0",
     "@types/react": "^16.9.32",
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "@typescript-eslint/parser": "^2.26.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-emotion": "^10.0.27",
@@ -24,11 +31,13 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^3.0.0",
     "husky": "^4.2.3",
+    "imagemin-svgo": "^7.1.0",
     "lint-staged": "^10.1.2",
+    "next-compose-plugins": "^2.2.0",
+    "next-optimized-images": "^2.5.7",
     "prettier": "^2.0.4",
-    "typescript": "^3.8.3",
-    "@typescript-eslint/eslint-plugin": "^2.26.0",
-    "@typescript-eslint/parser": "^2.26.0"
+    "svg-sprite-loader": "^4.1.3",
+    "typescript": "^3.8.3"
   },
   "husky": {
     "hooks": {
