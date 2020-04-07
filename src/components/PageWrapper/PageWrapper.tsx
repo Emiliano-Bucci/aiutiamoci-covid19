@@ -48,7 +48,7 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
               }
             `}
           >
-            Aiutiamoci Covid 19
+            Covid 19
           </h1>
           <span
             css={css`

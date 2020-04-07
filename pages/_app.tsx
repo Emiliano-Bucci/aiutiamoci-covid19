@@ -17,7 +17,7 @@ const App: React.FC<Props> = ({ Component, pageProps }) => {
     <Fragment>
       <Head />
       <DefaultSeo
-        title="Aiutiamoci Covid 19 - Aiutiamoci per aiutare"
+        title="Covid 19 - Aiutiamoci per aiutare"
         description="Una raccolta delle attività ancora aperte e informazioni utili su cosa fanno e come contattarli"
       />
       <Global styles={globalStyles} />
