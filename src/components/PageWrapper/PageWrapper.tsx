@@ -4,12 +4,17 @@ import React from 'react'
 import { colors } from 'theme'
 import { shadow } from 'theme/shadow'
 import Logo from 'public/virus.svg?sprite'
+import { Link } from 'components/Link'
+import { useRouter } from 'next/router'
 
 type Props = {
   children: React.ReactNode
 }
 
 export const PageWrapper: React.FC<Props> = ({ children }) => {
+  const { pathname } = useRouter()
+  const isHomePage = pathname === '/'
+
   return (
     <div>
       <header
@@ -29,6 +34,8 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
         <div
           css={css`
             margin-top: 3.2rem;
+            position: relative;
+            z-index: 100;
           `}
         >
           <h1
@@ -64,7 +71,6 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
             position: absolute;
             top: 0;
             left: 0;
-            pointer-events: none;
             display: flex;
             justify-content: center;
             width: 100%;
@@ -72,16 +78,30 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
             background-color: transparent;
             z-index: 0;
 
-            svg {
-              flex-shrink: 0;
-              width: 72px;
-              height: 72px;
-              margin-top: 4rem;
-              fill: ${colors.dark};
+            a {
+              opacity: 1 !important;
             }
           `}
         >
-          <Logo />
+          <Link
+            href="/"
+            as="/"
+            isDisabled={isHomePage}
+            title="Torna alla pagina principale"
+            customStyles={css`
+              align-self: flex-start;
+              margin-top: 4rem;
+
+              svg {
+                flex-shrink: 0;
+                width: 72px;
+                height: 72px;
+                fill: ${colors.dark};
+              }
+            `}
+          >
+            <Logo />
+          </Link>
         </div>
       </header>
 
