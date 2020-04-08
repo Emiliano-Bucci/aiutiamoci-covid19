@@ -168,9 +168,9 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
             >
               emiliano.bucci@outlook.com
             </a>{' '}
-            che provvederò ad aggiornale la lista! Questo è un
-            progetto completamente <strong>gratuito</strong> con
-            l'unico scopo di avvicinare <strong>domanda</strong> e{' '}
+            e provvederò ad aggiornale la lista! Questo è un progetto
+            completamente <strong>gratuito</strong> con l'unico scopo
+            di avvicinare <strong>domanda</strong> e{' '}
             <strong>offerta</strong> in questo periodo tumultuoso,
             difficile e di grandi cambiamenti.
           </p>
