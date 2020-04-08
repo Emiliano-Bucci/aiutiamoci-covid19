@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import React from 'react'
-import { colors } from 'theme'
+import { colors, boxStyles } from 'theme'
 import { shadow } from 'theme/shadow'
 import Logo from 'public/virus.svg?sprite'
 import { Link } from 'components/Link'
@@ -107,15 +107,78 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
 
       <main
         css={css`
+          display: flex;
+          flex-direction: column;
+          align-items: center;
           max-width: 1200px;
           margin: 0 auto;
-          display: flex;
-          justify-content: center;
-          padding-bottom: 4rem;
           padding-bottom: 8rem;
+
+          & > * {
+            flex-shrink: 0;
+          }
+
+          @media all and (max-width: 700px) {
+            padding: 0 1.6rem;
+            padding-bottom: 8rem;
+          }
         `}
       >
         {children}
+
+        <div
+          css={css`
+            max-width: 720px;
+            padding: 2.4rem;
+            padding-top: 2rem;
+            margin: 0 auto;
+            position: relative;
+            z-index: 100;
+            margin-top: 8rem;
+            border-top: 5px solid ${colors.semiDark};
+            text-align: center;
+            ${boxStyles}
+          `}
+        >
+          <h2
+            css={css`
+              font-size: 3.2rem;
+              margin-bottom: 0.8rem;
+            `}
+          >
+            Collabora anche tu!
+          </h2>
+          <p
+            css={css`
+              margin-bottom: 1.6rem;
+            `}
+          >
+            Vuoi aggiungere la tua attività per avere più visibilità o
+            aiutare un tuo amico? Scrivimi a{' '}
+            <a
+              css={css`
+                color: inherit;
+                transition: color 400ms;
+
+                :hover {
+                  color: #3498db;
+                }
+              `}
+              href="mailto:emilianobucci@outlook.com"
+            >
+              emiliano.bucci@outlook.com
+            </a>{' '}
+            che provvederò ad aggiornale la lista!
+          </p>
+          <blockquote
+            css={css`
+              opacity: 0.8;
+              font-style: italic;
+            `}
+          >
+            ~ Aiutiamoci per aiutare ~
+          </blockquote>
+        </div>
       </main>
 
       <footer
@@ -123,6 +186,7 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
           padding: 1.6rem 0;
           background-color: ${colors.semiDark};
           text-align: center;
+          border-bottom: 5px solid ${colors.dark};
         `}
       >
         <span

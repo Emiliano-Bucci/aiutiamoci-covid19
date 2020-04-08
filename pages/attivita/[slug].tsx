@@ -22,7 +22,7 @@ const Page: NextPage<Activity> = ({ title, metadata, content }) => {
           padding-top: 3.2rem;
 
           @media all and (max-width: 700px) {
-            padding: 0 1.6rem;
+            padding: 0;
           }
         `}
       >

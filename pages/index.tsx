@@ -33,10 +33,6 @@ const Page = ({ objects: activity }: { objects: Activity[] }) => {
         margin-top: -4rem;
         width: 100%;
         max-width: 720px;
-
-        @media all and (max-width: 700px) {
-          padding: 0 1.6rem;
-        }
       `}
     >
       {activity.map(activity => {
