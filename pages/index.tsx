@@ -116,7 +116,7 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
           border-radius: 0;
           margin-bottom: 2.4rem;
 
-          @media all and (max-width: 345px) {
+          @media all and (max-width: 700px) {
             padding: 1.6rem;
           }
         `}
