@@ -136,6 +136,10 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
               align-items: center;
               justify-content: space-between;
               margin-bottom: 2.4rem;
+
+              @media all and (max-width: 450px) {
+                margin-bottom: 0.8rem;
+              }
             `}
           >
             <h3
