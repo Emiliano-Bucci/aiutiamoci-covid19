@@ -24,21 +24,36 @@ export type Activity = {
   }
 }
 
-type FilterStateTag = {
-  title: string
-}
-
 type FilterState = {
-  search: string
-  tags: FilterStateTag[]
+  tag: string
   city: string
 }
 
 const defaultFilterState = {
-  search: '',
-  tags: [],
-  city: '',
+  tag: 'Tutti',
+  city: 'Tutte',
 }
+
+const selectStyles = css`
+  border: none;
+  background-color: ${colors.semiDark};
+  padding: 1.2rem 1.6rem;
+  cursor: pointer;
+  transition: all 400ms;
+  outline: none;
+  font-size: 1.4rem;
+  font-family: inherit;
+  letter-spacing: inherit;
+  width: 100%;
+  border-radius: 4px;
+  color: #fff;
+
+  :hover,
+  :focus {
+    color: #fff;
+    background-color: ${colors.dark};
+  }
+`
 
 const Page = ({ objects: activities }: { objects: Activity[] }) => {
   const [filterState, setFilterState] = useState<FilterState>(
@@ -47,73 +62,179 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
 
   const filteredEvents = activities
     .filter(activity => {
-      return activity.title
-        .toLowerCase()
-        .includes(filterState.search.toLowerCase())
-    })
-    .filter(activity => {
-      return filterState.tags.every(tag =>
-        activity.metadata.tags.every(
-          _tag => tag.title === _tag.title,
-        ),
+      if (filterState.tag === 'Tutti') {
+        return activity
+      }
+
+      return activity.metadata.tags.some(
+        tag => tag.title === filterState.tag,
       )
     })
     .filter(activity => {
-      if (!filterState.city) {
+      if (filterState.city === 'Tutte') {
         return activity
       }
 
       return filterState.city === activity.metadata.city
     })
 
+  const cities = activities.map(activity => activity.metadata.city)
+  const filteredCitites = cities
+    .filter((city, index) => cities.indexOf(city) === index)
+    .filter(city => !!city)
+  filteredCitites.unshift('Tutte')
+
+  const tags = [] as string[]
+
+  activities.forEach(activity => {
+    activity.metadata.tags.forEach(__tag => {
+      tags.push(__tag.title)
+    })
+  })
+
+  const filteredTags = tags.filter(
+    (tag, index) => tags.indexOf(tag) === index,
+  )
+  filteredTags.unshift('Tutti')
+
   return (
     <Fragment>
       <div
         css={css`
           ${boxStyles};
+          display: flex;
+          justify-content: center;
           max-width: 720px;
           width: 100%;
           z-index: 50;
-          transform: translateY(-50%);
-          border-radius: 4px;
+          border-radius: 0;
+          padding: 2.4rem;
+          padding-top: 1.6rem;
+          margin-top: 4rem;
+          border-top: 5px solid ${colors.semiDark};
+          position: sticky;
+          top: 0;
+          z-index: 200;
+
+          @media all and (max-width: 700px) {
+            width: 100vw;
+            border-radius: 0;
+            max-width: 100vw;
+          }
+
+          @media all and (max-width: 345px) {
+            padding: 1.6rem;
+          }
         `}
       >
         <div>
-          <input
-            type="text"
-            placeholder="Cerca attività per nome"
-            value={filterState.search}
-            onChange={event => {
-              const value = event.target.value
-              setFilterState(prevState => ({
-                ...prevState,
-                search: value,
-              }))
-            }}
+          <div
             css={css`
-              border: none;
-              width: 100%;
-              height: 100%;
-              font-size: 1.6rem;
-              padding: 1.6rem;
-              outline: none;
-              font-family: inherit;
-              letter-spacing: inherit;
-              border: 1px solid transparent;
-              transition: all 400ms;
-              border-radius: 4px;
-
-              :focus {
-                border-color: ${colors.semiLight};
-              }
-
-              ::placeholder {
-                opacity: 0.7;
-              }
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              margin-bottom: 2.4rem;
             `}
-          />
+          >
+            <h3
+              css={css`
+                font-size: 2.4rem;
+                text-align: center;
+              `}
+            >
+              Filtra le attività
+            </h3>
+
+            <button
+              onClick={() => {
+                setFilterState(defaultFilterState)
+              }}
+              css={css`
+                ${buttonStyles};
+                padding: 0.8rem 2rem;
+              `}
+            >
+              Reset
+            </button>
+          </div>
+
+          <div
+            css={css`
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            `}
+          >
+            <div
+              css={css`
+                display: flex;
+                flex-direction: column;
+                margin-right: 1.6rem;
+              `}
+            >
+              <label
+                htmlFor="cities"
+                css={css`
+                  margin-right: 0.8rem;
+                `}
+              >
+                Scegli una città:
+              </label>
+
+              <select
+                id="cities"
+                css={selectStyles}
+                value={filterState.city}
+                onChange={event => {
+                  const value = event.target.value
+                  setFilterState(prevState => ({
+                    ...prevState,
+                    city: value,
+                  }))
+                }}
+              >
+                {filteredCitites.map(city => {
+                  return (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  )
+                })}
+              </select>
+            </div>
+
+            <div
+              css={css`
+                display: flex;
+                flex-direction: column;
+              `}
+            >
+              <label id="tags">Scegli un tag:</label>
+              <select
+                id="tags"
+                css={selectStyles}
+                value={filterState.tag}
+                onChange={event => {
+                  const value = event.target.value
+                  setFilterState(prevState => ({
+                    ...prevState,
+                    tag: value,
+                  }))
+                }}
+              >
+                {filteredTags.map(city => {
+                  return (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  )
+                })}
+              </select>
+            </div>
+          </div>
         </div>
       </div>
+
       <div
         css={css`
           position: relative;

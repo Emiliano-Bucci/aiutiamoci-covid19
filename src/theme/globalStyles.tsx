@@ -224,6 +224,8 @@ export const globalStyles = css`
   input,
   textarea {
     letter-spacing: inherit;
+    font-family: inherit;
+    font-size: 1.4rem;
   }
 
   button {
@@ -249,6 +251,10 @@ export const globalStyles = css`
     line-height: 1;
   }
 
+  select {
+    -webkit-appearance: none;
+  }
+
   /* Used by the Media query lib to not break styles */
   .fresnel-container {
     width: 100%;
@@ -268,6 +274,7 @@ export const boxStyles = css`
 `
 
 export const buttonStyles = css`
+  border: none;
   display: block;
   color: inherit;
   padding: 0.8rem 1.6rem;
@@ -279,6 +286,7 @@ export const buttonStyles = css`
   flex-shrink: 0;
   color: #fff;
   text-align: center;
+  cursor: pointer;
 
   :hover,
   :focus {
