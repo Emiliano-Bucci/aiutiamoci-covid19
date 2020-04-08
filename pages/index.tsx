@@ -76,7 +76,7 @@ const Page = ({ objects: activity }: { objects: Activity[] }) => {
             <div
               css={css`
                 display: flex;
-                align-items: center;
+                align-items: flex-end;
                 justify-content: space-between;
                 padding-top: 2.4rem;
 
