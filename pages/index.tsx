@@ -109,12 +109,12 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
           z-index: 50;
           padding: 2.4rem;
           padding-top: 1.6rem;
-          border-top: 5px solid ${colors.semiDark};
+          border-top: 8px solid ${colors.semiDark};
           position: sticky;
           top: 0;
           z-index: 200;
           border-radius: 0;
-          margin-bottom: 1.6rem;
+          margin-bottom: 2.4rem;
 
           @media all and (max-width: 345px) {
             padding: 1.6rem;

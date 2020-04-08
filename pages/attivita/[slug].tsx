@@ -15,26 +15,20 @@ const Page: NextPage<Activity> = ({ title, metadata, content }) => {
       <div
         css={css`
           ${boxStyles};
-          border-top: 5px solid ${colors.semiDark};
-          position: relative;
-          z-index: 10;
-          margin: 0 auto;
-          width: 100%;
-          max-width: 720px;
-          padding: 3.2rem;
-          padding-top: 2.4rem;
-          margin-top: 4.8rem;
-
-          @media all and (max-width: 700px) {
-            padding: 2rem;
-            padding-top: 1.2rem;
-          }
+          border-radius: 0;
+          width: 100vw;
+          border-top: 8px solid ${colors.semiDark};
+          position: sticky;
+          top: 0;
+          z-index: 200;
+          margin-bottom: 2.4rem;
         `}
       >
         <h1
           css={css`
             font-size: 4rem;
-            margin-bottom: 3.2rem;
+            padding: 3.2rem 0;
+            text-align: center;
 
             @media all and (max-width: 700px) {
               font-size: 3.2rem;
@@ -44,7 +38,26 @@ const Page: NextPage<Activity> = ({ title, metadata, content }) => {
         >
           {title}
         </h1>
+      </div>
 
+      <div
+        css={css`
+          ${boxStyles};
+          border-top: 5px solid ${colors.semiDark};
+          position: relative;
+          z-index: 10;
+          margin: 0 auto;
+          width: 100%;
+          max-width: 720px;
+          padding: 3.2rem;
+          margin-top: 4.8rem;
+
+          @media all and (max-width: 700px) {
+            padding: 2rem;
+            padding-top: 1.2rem;
+          }
+        `}
+      >
         <div
           css={css`
             margin-bottom: 3.2rem;

@@ -207,9 +207,9 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
       <footer
         css={css`
           padding: 1.6rem 0;
-          background-color: ${colors.semiDark};
+          background-color: ${colors.semiLight};
           text-align: center;
-          border-bottom: 8px solid ${colors.dark};
+          border-bottom: 8px solid ${colors.semiDark};
         `}
       >
         <span
