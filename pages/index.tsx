@@ -30,7 +30,7 @@ const Page = ({ objects: activity }: { objects: Activity[] }) => {
         position: relative;
         z-index: 10;
         margin: 0 auto;
-        margin-top: -4rem;
+        padding-top: 4rem;
         width: 100%;
         max-width: 720px;
       `}

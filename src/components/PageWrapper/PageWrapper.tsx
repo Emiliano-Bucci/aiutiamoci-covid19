@@ -21,19 +21,25 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
         css={css`
           display: flex;
           justify-content: center;
+          flex-direction: column;
           align-items: center;
           width: 100%;
-          height: 400px;
+          min-height: 400px;
           background-color: #fff;
           border-top: 8px solid ${colors.semiLight};
           box-shadow: ${shadow.light};
           text-align: center;
           position: relative;
+
+          & > * {
+            flex-shrink: 0;
+          }
         `}
       >
         <div
           css={css`
-            margin-top: 3.2rem;
+            margin-top: 10rem;
+            margin-bottom: 2.4rem;
             position: relative;
             z-index: 100;
           `}
@@ -64,6 +70,28 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
           >
             Aiutiamoci per aiutare
           </span>
+        </div>
+
+        <div
+          css={css`
+            position: relative;
+            z-index: 100;
+            max-width: 560px;
+            padding: 0.8rem;
+            border-radius: 4px;
+            background-color: #fdf5e7;
+            border: 1px solid #fad7a0;
+
+            @media all and (max-width: 700px) {
+              border-radius: 0;
+            }
+          `}
+        >
+          <p>
+            In questo portale vengono elencate le attività che operano
+            ancora in questo periodo di crisi effettuando consegne a
+            domicilio.
+          </p>
         </div>
 
         <div

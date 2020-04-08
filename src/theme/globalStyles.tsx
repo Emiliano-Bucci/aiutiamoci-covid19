@@ -245,6 +245,10 @@ export const globalStyles = css`
     font-family: 'Lato';
   }
 
+  h1 {
+    line-height: 1;
+  }
+
   /* Used by the Media query lib to not break styles */
   .fresnel-container {
     width: 100%;

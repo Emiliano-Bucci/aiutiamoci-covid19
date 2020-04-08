@@ -3,7 +3,7 @@ import { jsx, css } from '@emotion/core'
 import { GetStaticProps, NextPage } from 'next'
 import { Activity, allActivitiesQuery } from 'pages'
 import 'isomorphic-unfetch'
-import { boxStyles, buttonStyles, colors } from 'theme'
+import { buttonStyles, colors } from 'theme'
 import { Fragment } from 'react'
 import { NextSeo } from 'next-seo'
 import { Link } from 'components/Link'
@@ -20,24 +20,16 @@ const Page: NextPage<Activity> = ({ title, metadata, content }) => {
           width: 100%;
           max-width: 720px;
           padding-top: 3.2rem;
-
-          @media all and (max-width: 700px) {
-            padding: 0;
-          }
         `}
       >
         <h1
           css={css`
-            ${boxStyles};
             font-size: 4rem;
-            transform: translateY(-50%);
-            margin-top: -3.2rem;
-            text-align: center;
-            padding: 1.6rem;
+            margin-bottom: 3.2rem;
 
             @media all and (max-width: 700px) {
               font-size: 3.2rem;
-              margin-top: 0;
+              line-height: 1.2;
             }
           `}
         >
