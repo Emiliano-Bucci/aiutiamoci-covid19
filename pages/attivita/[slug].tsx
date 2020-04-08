@@ -1,38 +1,17 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import { GetStaticProps, NextPage } from 'next'
-import { Activity } from 'pages'
+import { Activity, allActivitiesQuery } from 'pages'
 import 'isomorphic-unfetch'
 import { boxStyles, buttonStyles, colors } from 'theme'
-import { useEffect, Fragment } from 'react'
+import { Fragment } from 'react'
 import { NextSeo } from 'next-seo'
 import { Link } from 'components/Link'
 
-type Props = {
-  activity: Activity[]
-}
-
-const Page: NextPage<Props> = ({ activity }) => {
-  const _activity = activity[0]
-
-  useEffect(() => {
-    if (window) {
-      const links = document.querySelectorAll('a')
-
-      links.forEach(link => {
-        if (link.href.includes('tel:')) {
-          link.setAttribute('target', '')
-        }
-      })
-    }
-  }, [])
-
+const Page: NextPage<Activity> = ({ title, metadata, content }) => {
   return (
     <Fragment>
-      <NextSeo
-        title={_activity.title}
-        description={_activity.description}
-      />
+      <NextSeo title={title} description={metadata.description} />
       <div
         css={css`
           position: relative;
@@ -62,7 +41,7 @@ const Page: NextPage<Props> = ({ activity }) => {
             }
           `}
         >
-          {_activity.title}
+          {title}
         </h1>
 
         <div
@@ -126,7 +105,7 @@ const Page: NextPage<Props> = ({ activity }) => {
               border-radius: 4px;
             }
           `}
-          dangerouslySetInnerHTML={{ __html: _activity.content }}
+          dangerouslySetInnerHTML={{ __html: content }}
         />
 
         <Link
@@ -144,44 +123,16 @@ const Page: NextPage<Props> = ({ activity }) => {
   )
 }
 
-const allActivitiesQuery = `
-  query {
-    activity {
-      activityId
-      description
-      title
-      slug
-      city
-      content
-      tags {
-        tag {
-          title
-          slug
-        }
-      }
-    }
-  }
-`
-
-const activitiesQuery = `
-  query($slug: String!) {
-    activity(where: {
-      slug: {
-        _eq: $slug
-      }
+const activityQuery = `
+  query($slug: String!){
+    getObject(bucket_slug: "${process.env.bucketSlug}", input: {
+      slug: $slug,
+      read_key: "${process.env.graphqlEndpointReadKey}"
     }) {
-      activityId
-      description
+      _id
       title
-      slug
-      city
       content
-      tags {
-        tag {
-          title
-          slug
-        }
-      }
+      metadata
     }
   }
 `
@@ -199,13 +150,15 @@ export async function getStaticPaths() {
 
   const json = await res.json()
 
-  const paths = json.data.activity.map((activity: Activity) => {
-    return {
-      params: {
-        slug: activity.slug,
-      },
-    }
-  })
+  const paths = json.data.getObjects.objects.map(
+    (activity: Activity) => {
+      return {
+        params: {
+          slug: activity.slug,
+        },
+      }
+    },
+  )
 
   return {
     paths,
@@ -220,7 +173,7 @@ export const getStaticProps: GetStaticProps = async props => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      query: activitiesQuery,
+      query: activityQuery,
       variables: {
         slug: props.params!.slug,
       },
@@ -235,7 +188,7 @@ export const getStaticProps: GetStaticProps = async props => {
     throw new Error('Failed to fetch API')
   }
   return {
-    props: json.data,
+    props: json.data.getObject,
   }
 }
 

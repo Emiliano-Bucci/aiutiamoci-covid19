@@ -6,23 +6,24 @@ import TagSVG from 'public/tag.svg?sprite'
 import { Link } from 'components/Link'
 
 type Tag = {
-  tag: {
-    title: string
-    slug: string
-  }
+  title: string
+  slug: string
+  _id: string
 }
 
 export type Activity = {
-  activityId: string
-  description: string
+  _id: string
   title: string
   slug: string
-  city: string
   content: string
-  tags: Tag[]
+  city: string
+  metadata: {
+    tags: Tag[]
+    description: string
+  }
 }
 
-const Page = ({ activity }: { activity: Activity[] }) => {
+const Page = ({ objects: activity }: { objects: Activity[] }) => {
   return (
     <div
       css={css`
@@ -41,7 +42,7 @@ const Page = ({ activity }: { activity: Activity[] }) => {
       {activity.map(activity => {
         return (
           <article
-            key={activity.activityId}
+            key={activity._id}
             css={css`
               ${boxStyles};
               padding: 2.4rem;
@@ -72,7 +73,7 @@ const Page = ({ activity }: { activity: Activity[] }) => {
                   display: block;
                 `}
               >
-                {activity.description}
+                {activity.metadata.description}
               </span>
             </div>
 
@@ -106,10 +107,10 @@ const Page = ({ activity }: { activity: Activity[] }) => {
                     flex-flow: wrap;
                   `}
                 >
-                  {activity.tags.map(tag => {
+                  {activity.metadata.tags.map(tag => {
                     return (
                       <li
-                        key={tag.tag.slug}
+                        key={tag.slug}
                         css={css`
                           display: flex;
                           align-items: center;
@@ -143,7 +144,7 @@ const Page = ({ activity }: { activity: Activity[] }) => {
                           />
                         </span>
 
-                        <span>{tag.tag.title}</span>
+                        <span>{tag.title}</span>
                       </li>
                     )
                   })}
@@ -174,20 +175,21 @@ const Page = ({ activity }: { activity: Activity[] }) => {
   )
 }
 
-const activitiesQuery = `
+export const allActivitiesQuery = `
   query {
-    activity {
-      activityId
-      description
-      title
-      slug
-      city
-      content
-      tags {
-        tag {
-          title
-          slug
-        }
+    getObjects(
+      bucket_slug: "${process.env.bucketSlug}"
+      input: {
+        read_key: "${process.env.graphqlEndpointReadKey}"
+        type: "activities"
+      }
+    ) {
+      objects {
+        _id
+        title
+        content
+        slug
+        metadata
       }
     }
   }
@@ -200,7 +202,7 @@ export async function getStaticProps() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      query: activitiesQuery,
+      query: allActivitiesQuery,
     }),
   })
 
@@ -212,7 +214,7 @@ export async function getStaticProps() {
     throw new Error('Failed to fetch API')
   }
   return {
-    props: json.data,
+    props: json.data.getObjects,
   }
 }
 

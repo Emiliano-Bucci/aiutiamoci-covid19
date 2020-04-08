@@ -26,8 +26,10 @@ const nextConfig = {
     return config
   },
   env: {
-    graphqlEndpoint:
-      'https://aiutiamoci-covid19.herokuapp.com/v1/graphql',
+    bucketSlug: 'aiutiamoci-covid19',
+    graphqlEndpointReadKey:
+      'wcZUxZQeEnxEugFyx6FU3MJKEYjoApD7487plZ3DYgYhbG2krV',
+    graphqlEndpoint: 'https://graphql.cosmicjs.com/v2',
   },
 }
 
