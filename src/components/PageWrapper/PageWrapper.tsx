@@ -38,10 +38,41 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
       >
         <div
           css={css`
-            margin-top: 10rem;
-            margin-bottom: 2.4rem;
+            display: flex;
+            justify-content: center;
+            background-color: transparent;
+            z-index: 0;
+            margin-bottom: 1.6rem;
+
+            a {
+              opacity: 1 !important;
+            }
+          `}
+        >
+          <Link
+            href="/"
+            as="/"
+            isDisabled={isHomePage}
+            title="Torna alla pagina principale"
+            customStyles={css`
+              align-self: flex-start;
+
+              svg {
+                flex-shrink: 0;
+                width: 72px;
+                height: 72px;
+                fill: ${colors.dark};
+              }
+            `}
+          >
+            <Logo />
+          </Link>
+        </div>
+        <div
+          css={css`
             position: relative;
             z-index: 100;
+            margin-bottom: 0.8rem;
           `}
         >
           <h1
@@ -77,10 +108,6 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
             position: relative;
             z-index: 100;
             max-width: 560px;
-            padding: 0.8rem;
-            border-radius: 4px;
-            background-color: #fdf5e7;
-            border: 1px solid #fad7a0;
 
             @media all and (max-width: 700px) {
               border-radius: 0;
@@ -92,44 +119,6 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
             ancora in questo periodo di crisi effettuando consegne a
             domicilio oppure consulenza a distanza.
           </p>
-        </div>
-
-        <div
-          css={css`
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
-            z-index: 0;
-
-            a {
-              opacity: 1 !important;
-            }
-          `}
-        >
-          <Link
-            href="/"
-            as="/"
-            isDisabled={isHomePage}
-            title="Torna alla pagina principale"
-            customStyles={css`
-              align-self: flex-start;
-              margin-top: 4rem;
-
-              svg {
-                flex-shrink: 0;
-                width: 72px;
-                height: 72px;
-                fill: ${colors.dark};
-              }
-            `}
-          >
-            <Logo />
-          </Link>
         </div>
       </header>
 
@@ -158,11 +147,11 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
           css={css`
             max-width: 720px;
             padding: 2.4rem;
-            padding-top: 2rem;
+            padding-top: 1.6rem;
             margin: 0 auto;
             position: relative;
             z-index: 100;
-            margin-top: 8rem;
+            margin-top: 4rem;
             border-top: 5px solid ${colors.semiDark};
             text-align: center;
             ${boxStyles}

@@ -3,7 +3,7 @@ import { jsx, css } from '@emotion/core'
 import { GetStaticProps, NextPage } from 'next'
 import { Activity, allActivitiesQuery } from 'pages'
 import 'isomorphic-unfetch'
-import { buttonStyles, colors } from 'theme'
+import { buttonStyles, colors, boxStyles } from 'theme'
 import { Fragment } from 'react'
 import { NextSeo } from 'next-seo'
 import { Link } from 'components/Link'
@@ -14,12 +14,16 @@ const Page: NextPage<Activity> = ({ title, metadata, content }) => {
       <NextSeo title={title} description={metadata.description} />
       <div
         css={css`
+          ${boxStyles};
+          border-top: 5px solid ${colors.semiDark};
           position: relative;
           z-index: 10;
           margin: 0 auto;
           width: 100%;
           max-width: 720px;
-          padding-top: 3.2rem;
+          padding: 3.2rem;
+          padding-top: 2.4rem;
+          margin-top: 4.8rem;
         `}
       >
         <h1
@@ -92,8 +96,7 @@ const Page: NextPage<Activity> = ({ title, metadata, content }) => {
 
             .info {
               background: #fdf5e7;
-              padding: 1.6rem;
-              border: 1px solid #fad7a0;
+              padding: 1.2rem 1.6rem;
               border-radius: 4px;
             }
           `}
