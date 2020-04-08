@@ -104,23 +104,17 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
           ${boxStyles};
           display: flex;
           justify-content: center;
-          max-width: 720px;
-          width: 100%;
+          max-width: 100vw;
+          width: 100vw;
           z-index: 50;
-          border-radius: 0;
           padding: 2.4rem;
           padding-top: 1.6rem;
-          margin-top: 4rem;
           border-top: 5px solid ${colors.semiDark};
           position: sticky;
           top: 0;
           z-index: 200;
-
-          @media all and (max-width: 700px) {
-            width: 100vw;
-            border-radius: 0;
-            max-width: 100vw;
-          }
+          border-radius: 0;
+          margin-bottom: 1.6rem;
 
           @media all and (max-width: 345px) {
             padding: 1.6rem;
@@ -169,7 +163,11 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
               css={css`
                 display: flex;
                 flex-direction: column;
-                margin-right: 1.6rem;
+                margin-right: 4rem;
+
+                @media all and (max-width: 450px) {
+                  margin-right: 1.6rem;
+                }
               `}
             >
               <label
