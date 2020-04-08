@@ -108,10 +108,6 @@ const Page = () => {
 
             p {
               font-size: 1.64rem;
-
-              :not(:last-of-type) {
-                margin-bottom: 2.4rem;
-              }
             }
 
             ul {
