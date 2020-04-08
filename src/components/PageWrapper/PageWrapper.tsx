@@ -153,8 +153,8 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
               margin-bottom: 1.6rem;
             `}
           >
-            Vuoi aggiungere la tua attività per avere più visibilità o
-            aiutare un tuo amico? Scrivimi a{' '}
+            Vuoi aggiungere la tua attività? Nessun problema, scrivimi
+            a{' '}
             <a
               css={css`
                 color: inherit;
@@ -168,7 +168,11 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
             >
               emiliano.bucci@outlook.com
             </a>{' '}
-            che provvederò ad aggiornale la lista!
+            che provvederò ad aggiornale la lista! Questo è un
+            progetto completamente <strong>gratuito</strong> con
+            l'unico scopo di avvicinare <strong>domanda</strong> e{' '}
+            <strong>offerta</strong> in questo periodo tumultuoso,
+            difficile e di grandi cambiamenti.
           </p>
           <blockquote
             css={css`
