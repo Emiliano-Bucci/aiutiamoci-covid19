@@ -218,7 +218,7 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
           padding: 1.6rem 0;
           background-color: ${colors.semiDark};
           text-align: center;
-          border-bottom: 5px solid ${colors.dark};
+          border-bottom: 8px solid ${colors.dark};
         `}
       >
         <span
