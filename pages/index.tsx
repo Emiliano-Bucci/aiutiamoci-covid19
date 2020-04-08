@@ -4,6 +4,7 @@ import 'isomorphic-unfetch'
 import { colors, boxStyles, buttonStyles } from 'theme'
 import TagSVG from 'public/tag.svg?sprite'
 import { Link } from 'components/Link'
+import { Fragment, useState } from 'react'
 
 type Tag = {
   title: string
@@ -16,158 +17,247 @@ export type Activity = {
   title: string
   slug: string
   content: string
-  city: string
   metadata: {
+    city: string
     tags: Tag[]
     description: string
   }
 }
 
-const Page = ({ objects: activity }: { objects: Activity[] }) => {
-  return (
-    <div
-      css={css`
-        position: relative;
-        z-index: 10;
-        margin: 0 auto;
-        padding-top: 4rem;
-        width: 100%;
-        max-width: 720px;
-      `}
-    >
-      {activity.map(activity => {
-        return (
-          <article
-            key={activity._id}
-            css={css`
-              ${boxStyles};
-              padding: 2.4rem;
-              padding-top: 1.6rem;
-              border-left: 5px solid ${colors.semiLight};
+type FilterStateTag = {
+  title: string
+}
 
-              :not(:last-of-type) {
-                margin-bottom: 4rem;
+type FilterState = {
+  search: string
+  tags: FilterStateTag[]
+  city: string
+}
+
+const defaultFilterState = {
+  search: '',
+  tags: [],
+  city: '',
+}
+
+const Page = ({ objects: activities }: { objects: Activity[] }) => {
+  const [filterState, setFilterState] = useState<FilterState>(
+    defaultFilterState,
+  )
+
+  const filteredEvents = activities
+    .filter(activity => {
+      return activity.title
+        .toLowerCase()
+        .includes(filterState.search.toLowerCase())
+    })
+    .filter(activity => {
+      return filterState.tags.every(tag =>
+        activity.metadata.tags.every(
+          _tag => tag.title === _tag.title,
+        ),
+      )
+    })
+    .filter(activity => {
+      if (!filterState.city) {
+        return activity
+      }
+
+      return filterState.city === activity.metadata.city
+    })
+
+  return (
+    <Fragment>
+      <div
+        css={css`
+          ${boxStyles};
+          max-width: 720px;
+          width: 100%;
+          z-index: 50;
+          transform: translateY(-50%);
+          border-radius: 4px;
+        `}
+      >
+        <div>
+          <input
+            type="text"
+            placeholder="Cerca attività per nome"
+            value={filterState.search}
+            onChange={event => {
+              const value = event.target.value
+              setFilterState(prevState => ({
+                ...prevState,
+                search: value,
+              }))
+            }}
+            css={css`
+              border: none;
+              width: 100%;
+              height: 100%;
+              font-size: 1.6rem;
+              padding: 1.6rem;
+              outline: none;
+              font-family: inherit;
+              letter-spacing: inherit;
+              border: 1px solid transparent;
+              transition: all 400ms;
+              border-radius: 4px;
+
+              :focus {
+                border-color: ${colors.semiLight};
               }
 
-              @media all and (max-width: 700px) {
-                padding: 2rem;
-                padding-top: 1.2rem;
+              ::placeholder {
+                opacity: 0.7;
               }
             `}
-          >
-            <div>
-              <h2
-                css={css`
-                  font-size: 2.8rem;
-                  margin-bottom: 0.8rem;
-                `}
-              >
-                {activity.title}
-              </h2>
-              <span
-                css={css`
-                  display: block;
-                `}
-              >
-                {activity.metadata.description}
-              </span>
-            </div>
-
-            <div
+          />
+        </div>
+      </div>
+      <div
+        css={css`
+          position: relative;
+          z-index: 10;
+          margin: 0 auto;
+          padding-top: 4rem;
+          width: 100%;
+          max-width: 720px;
+        `}
+      >
+        {filteredEvents.map(activity => {
+          return (
+            <article
+              key={activity._id}
               css={css`
-                display: flex;
-                align-items: flex-end;
-                justify-content: space-between;
-                padding-top: 2.4rem;
+                ${boxStyles};
+                padding: 2.4rem;
+                padding-top: 1.6rem;
+                border-left: 5px solid ${colors.semiLight};
+
+                :not(:last-of-type) {
+                  margin-bottom: 4rem;
+                }
 
                 @media all and (max-width: 700px) {
-                  flex-direction: column;
-                  align-items: stretch;
+                  padding: 2rem;
+                  padding-top: 1.2rem;
                 }
               `}
             >
+              <div>
+                <h2
+                  css={css`
+                    font-size: 2.8rem;
+                    margin-bottom: 0.8rem;
+                  `}
+                >
+                  {activity.title}
+                </h2>
+                <span
+                  css={css`
+                    display: block;
+                  `}
+                >
+                  {activity.metadata.description}
+                </span>
+              </div>
+
               <div
                 css={css`
                   display: flex;
-                  flex: 1;
-                  margin-right: 3.2rem;
+                  align-items: flex-end;
+                  justify-content: space-between;
+                  padding-top: 2.4rem;
 
                   @media all and (max-width: 700px) {
-                    margin-right: 0;
+                    flex-direction: column;
+                    align-items: stretch;
                   }
                 `}
               >
-                <ul
+                <div
                   css={css`
                     display: flex;
-                    flex-flow: wrap;
+                    flex: 1;
+                    margin-right: 3.2rem;
+
+                    @media all and (max-width: 700px) {
+                      margin-right: 0;
+                    }
                   `}
                 >
-                  {activity.metadata.tags.map(tag => {
-                    return (
-                      <li
-                        key={tag.slug}
-                        css={css`
-                          display: flex;
-                          align-items: center;
-                          font-size: 1.4rem;
-                          background-color: ${colors.semiLight};
-                          border-radius: 4px;
-                          color: #fff;
-                          padding: 0.4rem 0.8rem;
-
-                          :not(:last-of-type) {
-                            margin-right: 0.8rem;
-                          }
-
-                          @media all and (max-width: 700px) {
-                            margin-bottom: 0.8rem;
-                          }
-                        `}
-                      >
-                        <span
+                  <ul
+                    css={css`
+                      display: flex;
+                      flex-flow: wrap;
+                    `}
+                  >
+                    {activity.metadata.tags.map(tag => {
+                      return (
+                        <li
+                          key={tag.slug}
                           css={css`
-                            margin-right: 0.64rem;
+                            display: flex;
+                            align-items: center;
+                            font-size: 1.4rem;
+                            background-color: ${colors.semiLight};
+                            border-radius: 4px;
+                            color: #fff;
+                            padding: 0.4rem 0.8rem;
+
+                            :not(:last-of-type) {
+                              margin-right: 0.8rem;
+                            }
+
+                            @media all and (max-width: 700px) {
+                              margin-bottom: 0.8rem;
+                            }
                           `}
                         >
-                          <TagSVG
+                          <span
                             css={css`
-                              width: 14px;
-                              height: 14px;
-                              fill: #fff;
-                              color: #fff;
+                              margin-right: 0.64rem;
                             `}
-                          />
-                        </span>
+                          >
+                            <TagSVG
+                              css={css`
+                                width: 14px;
+                                height: 14px;
+                                fill: #fff;
+                                color: #fff;
+                              `}
+                            />
+                          </span>
 
-                        <span>{tag.title}</span>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
+                          <span>{tag.title}</span>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
 
-              <div
-                css={css`
-                  @media all and (max-width: 700px) {
-                    margin-top: 0.8rem;
-                  }
-                `}
-              >
-                <Link
-                  href="/attivita/[slug]"
-                  as={`/attivita/${activity.slug}`}
-                  customStyles={buttonStyles}
-                  title={`Visita l'attività ${activity.title}`}
+                <div
+                  css={css`
+                    @media all and (max-width: 700px) {
+                      margin-top: 0.8rem;
+                    }
+                  `}
                 >
-                  Vedi attività
-                </Link>
+                  <Link
+                    href="/attivita/[slug]"
+                    as={`/attivita/${activity.slug}`}
+                    customStyles={buttonStyles}
+                    title={`Visita l'attività ${activity.title}`}
+                  >
+                    Vedi attività
+                  </Link>
+                </div>
               </div>
-            </div>
-          </article>
-        )
-      })}
-    </div>
+            </article>
+          )
+        })}
+      </div>
+    </Fragment>
   )
 }
 

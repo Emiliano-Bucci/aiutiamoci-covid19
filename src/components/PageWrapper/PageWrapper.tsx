@@ -24,7 +24,7 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
           flex-direction: column;
           align-items: center;
           width: 100%;
-          padding: 4rem 0;
+          padding: 5.6rem 0;
           background-color: #fff;
           border-top: 8px solid ${colors.semiLight};
           box-shadow: ${shadow.light};
