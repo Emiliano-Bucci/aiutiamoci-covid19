@@ -394,7 +394,7 @@ export const allActivitiesQuery = `
       bucket_slug: "${process.env.bucketSlug}"
       input: {
         read_key: "${process.env.graphqlEndpointReadKey}"
-        type: "activities"
+        type: "activities",
       }
     ) {
       objects {

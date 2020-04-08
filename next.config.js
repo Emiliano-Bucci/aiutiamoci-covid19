@@ -15,6 +15,7 @@ const nextConfig = {
       ...(config.resolve.alias || {}),
       // custom webpack aliases
       components: path.resolve(__dirname, 'src/components'),
+      apollo: path.resolve(__dirname, 'src/apollo'),
       pages: path.resolve(__dirname, 'pages'),
       theme: path.resolve(__dirname, 'src/theme'),
       utils: path.resolve(__dirname, 'src/utils'),
