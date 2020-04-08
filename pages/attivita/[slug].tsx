@@ -32,7 +32,7 @@ const Page: NextPage<Activity> = ({ title, metadata, content }) => {
 
             @media all and (max-width: 700px) {
               font-size: 3.2rem;
-              line-height: 1.2;
+              line-height: 1.4;
               padding: 2.4rem 0.8rem;
               padding-top: 1.6rem;
               font-size: 2.6rem;
@@ -62,6 +62,7 @@ const Page: NextPage<Activity> = ({ title, metadata, content }) => {
         `}
       >
         <div
+          dangerouslySetInnerHTML={{ __html: content }}
           css={css`
             margin-bottom: 3.2rem;
 
@@ -108,6 +109,7 @@ const Page: NextPage<Activity> = ({ title, metadata, content }) => {
               display: inline-block;
               color: inherit;
               transition: all 400ms;
+              word-break: break-all;
 
               :hover,
               :focus {
@@ -119,9 +121,9 @@ const Page: NextPage<Activity> = ({ title, metadata, content }) => {
               background: #fdf5e7;
               padding: 1.2rem 1.6rem;
               border-radius: 4px;
+              margin-bottom: 2.4rem;
             }
           `}
-          dangerouslySetInnerHTML={{ __html: content }}
         />
 
         <Link

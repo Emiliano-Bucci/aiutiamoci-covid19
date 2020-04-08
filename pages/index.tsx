@@ -12,13 +12,19 @@ type Tag = {
   _id: string
 }
 
+type City = {
+  title: string
+  slug: string
+  _id: string
+}
+
 export type Activity = {
   _id: string
   title: string
   slug: string
   content: string
   metadata: {
-    city: string
+    city: City
     tags: Tag[]
     description: string
   }
@@ -75,10 +81,12 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
         return activity
       }
 
-      return filterState.city === activity.metadata.city
+      return filterState.city === activity.metadata.city.title
     })
 
-  const cities = activities.map(activity => activity.metadata.city)
+  const cities = activities.map(
+    activity => activity.metadata.city.title,
+  )
   const filteredCitites = cities
     .filter((city, index) => cities.indexOf(city) === index)
     .filter(city => !!city)
@@ -220,10 +228,10 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
                   }))
                 }}
               >
-                {filteredTags.map(city => {
+                {filteredTags.map(tag => {
                   return (
-                    <option key={city} value={city}>
-                      {city}
+                    <option key={tag} value={tag}>
+                      {tag}
                     </option>
                   )
                 })}
