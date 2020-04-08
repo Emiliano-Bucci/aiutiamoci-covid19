@@ -33,6 +33,9 @@ const Page: NextPage<Activity> = ({ title, metadata, content }) => {
             @media all and (max-width: 700px) {
               font-size: 3.2rem;
               line-height: 1.2;
+              padding: 2.4rem 0.8rem;
+              padding-top: 1.6rem;
+              font-size: 2.6rem;
             }
           `}
         >

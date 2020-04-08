@@ -26,7 +26,7 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
           width: 100%;
           padding: 5.6rem 0;
           background-color: #fff;
-          border-top: 8px solid ${colors.semiLight};
+          border-top: 8px solid ${colors.semiDark};
           box-shadow: ${shadow.light};
           text-align: center;
           position: relative;
