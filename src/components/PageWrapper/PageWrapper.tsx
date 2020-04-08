@@ -108,10 +108,7 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
             position: relative;
             z-index: 100;
             max-width: 560px;
-
-            @media all and (max-width: 700px) {
-              border-radius: 0;
-            }
+            padding: 0 1.6rem;
           `}
         >
           <p>
@@ -155,6 +152,11 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
             border-top: 5px solid ${colors.semiDark};
             text-align: center;
             ${boxStyles}
+
+            @media all and (max-width: 700px) {
+              padding: 2rem;
+              padding-top: 1.2rem;
+            }
           `}
         >
           <h2

@@ -24,6 +24,11 @@ const Page: NextPage<Activity> = ({ title, metadata, content }) => {
           padding: 3.2rem;
           padding-top: 2.4rem;
           margin-top: 4.8rem;
+
+          @media all and (max-width: 700px) {
+            padding: 2rem;
+            padding-top: 1.2rem;
+          }
         `}
       >
         <h1
