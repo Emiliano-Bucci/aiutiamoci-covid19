@@ -169,6 +169,10 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
               display: flex;
               align-items: center;
               justify-content: center;
+
+              & > * {
+                flex: 1;
+              }
             `}
           >
             <div
