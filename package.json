@@ -7,26 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix --config .eslintrc.js '**/*.{ts,tsx,js}'",
-    "lint:prepush": "eslint --fix --config .eslintrc.prepush.js '**/*.{ts,tsx,js}'",
-    "gen:types": "apollo codegen:generate --includes=src/apollo/**/* --outputFlat ./src/graphql-types/index.ts --target typescript --endpoint=https://graphql.cosmicjs.com/v2"
+    "lint:prepush": "eslint --fix --config .eslintrc.prepush.js '**/*.{ts,tsx,js}'"
   },
   "dependencies": {
-    "@apollo/react-hooks": "^3.1.4",
-    "@apollo/react-ssr": "^3.1.4",
-    "@apollo/react-testing": "^3.1.4",
     "@emotion/core": "^10.0.28",
-    "apollo": "^2.26.0",
-    "apollo-cache-inmemory": "^1.6.5",
-    "apollo-client": "^2.6.8",
-    "apollo-link-context": "^1.0.19",
-    "apollo-link-http": "^1.5.16",
-    "apollo-link-logger": "^1.2.3",
-    "graphql": "^14.6.0",
-    "graphql-tag": "^2.10.3",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^9.3.0",
     "next-seo": "^4.4.0",
-    "next-with-apollo": "^5.0.0",
     "now": "^17.1.0",
     "react": "16.13.1",
     "react-dom": "16.13.1"

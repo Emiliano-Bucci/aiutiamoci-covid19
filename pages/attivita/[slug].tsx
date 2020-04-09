@@ -1,35 +1,14 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import 'isomorphic-unfetch'
-import { getDataFromTree } from '@apollo/react-ssr'
-import { WithApollo } from 'components/WithApollo'
 import { Link } from 'components/Link'
 import { buttonStyles, boxStyles, colors } from 'theme'
 import { Fragment } from 'react'
 import { NextSeo } from 'next-seo'
-import { useQuery } from '@apollo/react-hooks'
-import { useRouter } from 'next/router'
-import { activityQuery } from 'apollo/queries'
-import { Activity, ActivityVariables } from 'graphql-types'
-import { PageLoader } from 'components/PageLoader'
+import { GetStaticProps, NextPage } from 'next'
+import { allActivitiesQuery, Activity } from 'pages'
 
-const Page = () => {
-  const { query } = useRouter()
-  const { data, loading } = useQuery<Activity, ActivityVariables>(
-    activityQuery,
-    {
-      variables: {
-        slug: query.slug as string,
-      },
-    },
-  )
-
-  if (!data || !data.getObject || loading) {
-    return <PageLoader />
-  }
-
-  const { title, metadata, content } = data.getObject
-
+const Page: NextPage<Activity> = ({ title, metadata, content }) => {
   return (
     <Fragment>
       <NextSeo title={title!} description={metadata.description} />
@@ -159,6 +138,73 @@ const Page = () => {
   )
 }
 
-export default WithApollo(Page, {
-  getDataFromTree,
-})
+const activityQuery = `
+  query($slug: String!){
+    getObject(bucket_slug: "${process.env.bucketSlug}", input: {
+      slug: $slug,
+      read_key: "${process.env.graphqlEndpointReadKey}"
+    }) {
+      _id
+      title
+      content
+      metadata
+    }
+  }
+`
+
+export async function getStaticPaths() {
+  const res = await fetch(process.env.graphqlEndpoint!, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: allActivitiesQuery,
+    }),
+  })
+
+  const json = await res.json()
+
+  const paths = json.data.getObjects.objects.map(
+    (activity: Activity) => {
+      return {
+        params: {
+          slug: activity.slug,
+        },
+      }
+    },
+  )
+
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+export const getStaticProps: GetStaticProps = async props => {
+  const res = await fetch(process.env.graphqlEndpoint!, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: activityQuery,
+      variables: {
+        slug: props.params!.slug,
+      },
+    }),
+  })
+
+  const json = await res.json()
+
+  if (json.errors) {
+    // eslint-disable-next-line no-console
+    console.error(json.errors)
+    throw new Error('Failed to fetch API')
+  }
+  return {
+    props: json.data.getObject,
+  }
+}
+
+export default Page
