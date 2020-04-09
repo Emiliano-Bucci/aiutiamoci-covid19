@@ -105,6 +105,9 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
   )
   filteredTags.unshift('Tutti')
 
+  const resetButtonIsDisabled =
+    filterState.city === 'Tutte' && filterState.tag === 'Tutti'
+
   return (
     <Fragment>
       <div
@@ -152,12 +155,19 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
             </h3>
 
             <button
+              disabled={resetButtonIsDisabled}
               onClick={() => {
                 setFilterState(defaultFilterState)
               }}
               css={css`
                 ${buttonStyles};
                 padding: 0.8rem 2rem;
+                ${resetButtonIsDisabled
+                  ? css`
+                      opacity: 0.5;
+                      pointer-events: none;
+                    `
+                  : undefined}
               `}
             >
               Reset
