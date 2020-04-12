@@ -16,7 +16,8 @@
     "next-seo": "^4.4.0",
     "now": "^17.1.0",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "react-hotjar": "^2.2.0"
   },
   "devDependencies": {
     "@types/node": "^13.11.0",

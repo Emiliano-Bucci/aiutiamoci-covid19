@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Global } from '@emotion/core'
 import { globalStyles } from 'theme'
 import { Head } from 'components/Head'
 import { DefaultSeo } from 'next-seo'
 import { PageWrapper } from 'components/PageWrapper'
+import { hotjar } from 'react-hotjar'
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -13,6 +14,12 @@ type Props = {
 }
 
 const App: React.FC<Props> = ({ Component, pageProps }) => {
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'production') {
+      hotjar.initialize(1765178, 6)
+    }
+  }, [])
+
   return (
     <Fragment>
       <Head />
