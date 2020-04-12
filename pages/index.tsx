@@ -336,6 +336,7 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
                       display: flex;
                       flex-flow: wrap;
                       margin-bottom: -4px;
+                      margin-left: -4px;
 
                       li {
                         margin: 4px;
