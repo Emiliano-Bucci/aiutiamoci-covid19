@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix --config .eslintrc.js '**/*.{ts,tsx,js}'",
-    "lint:prepush": "eslint --fix --config .eslintrc.prepush.js '**/*.{ts,tsx,js}'"
+    "lint:prepush": "eslint --fix --config .eslintrc.prepush.js '**/*.{ts,tsx,js}'",
+    "release": "git push --follow-tags && now --prod"
   },
   "dependencies": {
     "@emotion/core": "^10.0.28",

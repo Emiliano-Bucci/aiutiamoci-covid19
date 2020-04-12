@@ -335,6 +335,11 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
                     css={css`
                       display: flex;
                       flex-flow: wrap;
+                      margin-bottom: -4px;
+
+                      li {
+                        margin: 4px;
+                      }
                     `}
                   >
                     {activity.metadata.tags.map(tag => {
@@ -349,10 +354,6 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
                             border-radius: 4px;
                             color: #fff;
                             padding: 0.4rem 0.8rem;
-
-                            :not(:last-of-type) {
-                              margin-right: 0.8rem;
-                            }
 
                             @media all and (max-width: 700px) {
                               margin-bottom: 0.8rem;
