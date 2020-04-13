@@ -132,13 +132,18 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
           }
         `}
       >
-        <div>
+        <div
+          css={css`
+            width: 100%;
+            max-width: 720px;
+          `}
+        >
           <div
             css={css`
               display: flex;
               align-items: center;
               justify-content: space-between;
-              margin-bottom: 2.4rem;
+              margin-bottom: 1.6rem;
 
               @media all and (max-width: 450px) {
                 margin-bottom: 0.8rem;

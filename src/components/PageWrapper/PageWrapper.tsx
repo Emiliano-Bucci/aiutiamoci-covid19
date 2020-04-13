@@ -113,8 +113,7 @@ export const PageWrapper: React.FC<Props> = ({ children }) => {
         >
           <p>
             In questo portale vengono elencate le attività che operano
-            ancora in questo periodo di crisi effettuando consegne a
-            domicilio oppure consulenza a distanza.
+            ancora in questo periodo di crisi.
           </p>
         </div>
       </header>
