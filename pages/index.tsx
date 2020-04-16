@@ -67,31 +67,39 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
     defaultFilterState,
   )
 
-  const filteredEvents = activities
-    .filter(activity => {
-      if (filterState.tag === 'Tutti') {
-        return activity
-      }
+  function getFilteredActivities() {
+    return activities
+      .filter(activity => {
+        if (filterState.tag === 'Tutti') {
+          return activity
+        }
 
-      return activity.metadata.tags.some(
-        tag => tag.title === filterState.tag,
-      )
-    })
-    .filter(activity => {
-      if (filterState.city === 'Tutte') {
-        return activity
-      }
+        return activity.metadata.tags.some(
+          tag => tag.title === filterState.tag,
+        )
+      })
+      .filter(activity => {
+        if (filterState.city === 'Tutte') {
+          return activity
+        }
 
-      return filterState.city === activity.metadata.city.title
-    })
+        return filterState.city === activity.metadata.city.title
+      })
+  }
 
-  const cities = activities.map(
-    activity => activity.metadata.city.title,
-  )
-  const filteredCitites = cities
-    .filter((city, index) => cities.indexOf(city) === index)
-    .filter(city => !!city)
-  filteredCitites.unshift('Tutte')
+  function getFilteredCitites() {
+    const cities = activities.map(
+      activity => activity.metadata.city.title,
+    )
+    cities.unshift('Tutte')
+
+    return cities
+      .filter((city, index) => cities.indexOf(city) === index)
+      .filter(city => !!city)
+  }
+
+  const filteredEvents = getFilteredActivities()
+  const filteredCitites = getFilteredCitites()
 
   const tags = [] as string[]
 
@@ -172,10 +180,16 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
               css={css`
                 ${buttonStyles};
                 padding: 0.8rem 2rem;
+
                 ${resetButtonIsDisabled
                   ? css`
                       opacity: 0.5;
                       pointer-events: none;
+
+                      :hover,
+                      :focus {
+                        background-color: ${colors.semiDark};
+                      }
                     `
                   : undefined}
               `}
