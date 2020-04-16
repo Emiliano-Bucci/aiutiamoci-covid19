@@ -88,10 +88,14 @@ const Page: NextPage<Activity> = ({ title, metadata, content }) => {
             p {
               font-size: 1.64rem;
               margin-bottom: 2.4rem;
+
+              + ul {
+                margin-top: -1.4rem;
+              }
             }
 
             ul {
-              margin-bottom: 1.6rem;
+              margin-bottom: 2.4rem;
               list-style: disc;
               padding-left: 2rem;
 

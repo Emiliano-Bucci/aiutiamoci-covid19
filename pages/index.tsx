@@ -4,7 +4,7 @@ import 'isomorphic-unfetch'
 import { colors, boxStyles, buttonStyles } from 'theme'
 import TagSVG from 'public/tag.svg?sprite'
 import { Link } from 'components/Link'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useRef } from 'react'
 
 type Tag = {
   title: string
@@ -62,6 +62,7 @@ const selectStyles = css`
 `
 
 const Page = ({ objects: activities }: { objects: Activity[] }) => {
+  const resetButtonRef = useRef<HTMLButtonElement | null>(null)
   const [filterState, setFilterState] = useState<FilterState>(
     defaultFilterState,
   )
@@ -94,7 +95,7 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
 
   const tags = [] as string[]
 
-  activities.forEach(activity => {
+  filteredEvents.forEach(activity => {
     activity.metadata.tags.forEach(__tag => {
       tags.push(__tag.title)
     })
@@ -163,6 +164,10 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
               disabled={resetButtonIsDisabled}
               onClick={() => {
                 setFilterState(defaultFilterState)
+
+                if (resetButtonRef.current) {
+                  resetButtonRef.current.blur()
+                }
               }}
               css={css`
                 ${buttonStyles};
