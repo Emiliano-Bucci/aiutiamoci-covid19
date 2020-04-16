@@ -74,6 +74,8 @@ const Page: NextPage<Props> = ({ activities, tags }) => {
   const [filterState, setFilterState] = useState<FilterState>(
     defaultFilterState,
   )
+  const resetButtonIsDisabled =
+    filterState.city === 'Tutte' && filterState.tag === 'Tutti'
 
   function getFilteredActivities() {
     return activities
@@ -99,11 +101,11 @@ const Page: NextPage<Props> = ({ activities, tags }) => {
     const cities = activities.map(
       activity => activity.metadata.city.title,
     )
-    cities.unshift('Tutte')
 
     return cities
       .filter((city, index) => cities.indexOf(city) === index)
       .filter(city => !!city)
+      .sort((a, b) => a.localeCompare(b))
   }
 
   const filteredEvents = getFilteredActivities()
@@ -113,10 +115,11 @@ const Page: NextPage<Props> = ({ activities, tags }) => {
   const filteredTags = _tags.filter(
     (tag, index) => _tags.indexOf(tag) === index,
   )
-  filteredTags.unshift('Tutti')
 
-  const resetButtonIsDisabled =
-    filterState.city === 'Tutte' && filterState.tag === 'Tutti'
+  filteredTags.sort((a, b) => a.localeCompare(b))
+
+  filteredCitites.unshift('Tutte')
+  filteredTags.unshift('Tutti')
 
   return (
     <Fragment>
