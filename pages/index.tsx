@@ -5,6 +5,7 @@ import { colors, boxStyles, buttonStyles } from 'theme'
 import TagSVG from 'public/tag.svg?sprite'
 import { Link } from 'components/Link'
 import { Fragment, useState, useRef } from 'react'
+import { NextPage } from 'next'
 
 type Tag = {
   title: string
@@ -61,7 +62,14 @@ const selectStyles = css`
   }
 `
 
-const Page = ({ objects: activities }: { objects: Activity[] }) => {
+type Props = {
+  activities: Activity[]
+  tags: {
+    title: string
+  }[]
+}
+
+const Page: NextPage<Props> = ({ activities, tags }) => {
   const resetButtonRef = useRef<HTMLButtonElement | null>(null)
   const [filterState, setFilterState] = useState<FilterState>(
     defaultFilterState,
@@ -101,16 +109,9 @@ const Page = ({ objects: activities }: { objects: Activity[] }) => {
   const filteredEvents = getFilteredActivities()
   const filteredCitites = getFilteredCitites()
 
-  const tags = [] as string[]
-
-  filteredEvents.forEach(activity => {
-    activity.metadata.tags.forEach(__tag => {
-      tags.push(__tag.title)
-    })
-  })
-
-  const filteredTags = tags.filter(
-    (tag, index) => tags.indexOf(tag) === index,
+  const _tags = tags.map(tag => tag.title)
+  const filteredTags = _tags.filter(
+    (tag, index) => _tags.indexOf(tag) === index,
   )
   filteredTags.unshift('Tutti')
 
@@ -452,8 +453,24 @@ export const allActivitiesQuery = `
   }
 `
 
+const allTagsQuery = `
+query {
+  getObjects(
+    bucket_slug: "${process.env.bucketSlug}"
+    input: {
+      read_key: "${process.env.graphqlEndpointReadKey}"
+      type: "tags",
+    }
+  ) {
+    objects {
+      title
+    }
+  }
+}
+`
+
 export async function getStaticProps() {
-  const res = await fetch(process.env.graphqlEndpoint!, {
+  const activities = await fetch(process.env.graphqlEndpoint!, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -463,15 +480,36 @@ export async function getStaticProps() {
     }),
   })
 
-  const json = await res.json()
+  const tags = await fetch(process.env.graphqlEndpoint!, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: allTagsQuery,
+    }),
+  })
 
-  if (json.errors) {
+  const activitiesData = await activities.json()
+  const tagsData = await tags.json()
+
+  if (activitiesData.errors) {
     // eslint-disable-next-line no-console
-    console.error(json.errors)
+    console.error(activitiesData.errors)
     throw new Error('Failed to fetch API')
   }
+
+  if (tagsData.errors) {
+    // eslint-disable-next-line no-console
+    console.error(tagsData.errors)
+    throw new Error('Failed to fetch API')
+  }
+
   return {
-    props: json.data.getObjects,
+    props: {
+      activities: activitiesData.data.getObjects.objects,
+      tags: tagsData.data.getObjects.objects,
+    },
   }
 }
 
