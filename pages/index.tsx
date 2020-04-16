@@ -108,13 +108,17 @@ const Page: NextPage<Props> = ({ activities, tags }) => {
       .sort((a, b) => a.localeCompare(b))
   }
 
-  const filteredEvents = getFilteredActivities()
+  const filteredActivities = getFilteredActivities()
   const filteredCitites = getFilteredCitites()
 
   const _tags = tags.map(tag => tag.title)
-  const filteredTags = _tags.filter(
-    (tag, index) => _tags.indexOf(tag) === index,
-  )
+  const filteredTags = _tags.filter(tag => {
+    return filteredActivities.some(activity =>
+      activity.metadata.tags.some(_tag => {
+        return _tag.title === tag
+      }),
+    )
+  })
 
   filteredTags.sort((a, b) => a.localeCompare(b))
 
@@ -297,7 +301,7 @@ const Page: NextPage<Props> = ({ activities, tags }) => {
           max-width: 720px;
         `}
       >
-        {filteredEvents.map(activity => {
+        {filteredActivities.map(activity => {
           return (
             <article
               key={activity._id}
